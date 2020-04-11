@@ -1,0 +1,19 @@
+cabal-version:       2.4
+name:                whenever-core
+version:             0.1.0.0
+license:             BSD-3-Clause
+author:              Brad Parker
+maintainer:          hi@bradparker.com
+
+library
+  main-is:             Main.hs
+  build-depends:       base ^>=4.12.0.0
+  exposed-modules:     Whenever
+  default-language:    Haskell2010
+
+test-suite whenever-test
+  default-language:    Haskell2010
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Main.hs
+  build-depends:       base ^>=4.12.0.0
