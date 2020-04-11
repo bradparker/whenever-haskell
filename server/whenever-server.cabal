@@ -7,7 +7,12 @@ maintainer:          hi@bradparker.com
 
 executable whenever
   main-is:             Main.hs
-  build-depends:       base ^>=4.12.0.0, whenever-core
+  build-depends:       base ^>=4.12.0.0,
+                       bytestring,
+                       text,
+                       time,
+                       uuid,
+                       whenever-core
   default-language:    Haskell2010
 
 test-suite whenever-test

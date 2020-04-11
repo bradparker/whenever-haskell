@@ -1,9 +1,8 @@
 {-# OPTIONS_GHC -Wall #-}
 
 module Whenever
-  ( someFunc,
+  ( module Whenever.Event,
   )
 where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+import Whenever.Event

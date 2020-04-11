@@ -7,8 +7,15 @@ maintainer:          hi@bradparker.com
 
 library
   main-is:             Main.hs
-  build-depends:       base ^>=4.12.0.0
-  exposed-modules:     Whenever
+  build-depends:       base ^>=4.12.0.0,
+                       bytestring,
+                       text,
+                       time,
+                       uuid
+  exposed-modules:     Whenever,
+                       Whenever.Event,
+                       Whenever.Event.Encrypted,
+                       Whenever.Event.Unencrypted
   default-language:    Haskell2010
 
 test-suite whenever-test
