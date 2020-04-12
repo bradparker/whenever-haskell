@@ -8,14 +8,24 @@ maintainer:          hi@bradparker.com
 library
   main-is:             Main.hs
   build-depends:       base ^>=4.12.0.0,
+                       aeson,
                        bytestring,
+                       containers,
+                       cryptonite,
+                       generic-lens,
+                       lens,
                        text,
                        time,
                        uuid
   exposed-modules:     Whenever,
+                       Whenever.Calendar,
+                       Whenever.Calendar.Encrypted,
+                       Whenever.Calendar.EventIndex,
+                       Whenever.Calendar.Unencrypted,
                        Whenever.Event,
                        Whenever.Event.Encrypted,
                        Whenever.Event.Unencrypted
+  other-modules:       Crypto.Data.Padding.Extended
   default-language:    Haskell2010
 
 test-suite whenever-test

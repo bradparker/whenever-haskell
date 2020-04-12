@@ -2,8 +2,8 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# OPTIONS_GHC -Wall #-}
 
-module Whenever.Event.Encrypted
-  ( EncryptedEvent (..),
+module Whenever.Calendar.Encrypted
+  ( EncryptedCalendar (..),
   )
 where
 
@@ -11,9 +11,9 @@ import Data.ByteString (ByteString)
 import Data.UUID (UUID)
 import GHC.Generics (Generic)
 
-data EncryptedEvent
-  = EncryptedEvent
+data EncryptedCalendar
+  = EncryptedCalendar
       { id :: UUID,
-        content :: ByteString
+        eventIndex :: ByteString
       }
   deriving (Generic, Show)

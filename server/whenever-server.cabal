@@ -9,6 +9,8 @@ executable whenever
   main-is:             Main.hs
   build-depends:       base ^>=4.12.0.0,
                        bytestring,
+                       containers,
+                       cryptonite,
                        text,
                        time,
                        uuid,
