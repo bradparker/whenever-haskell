@@ -14,6 +14,6 @@ import GHC.Generics (Generic)
 data EncryptedEvent
   = EncryptedEvent
       { id :: UUID,
-        content :: ByteString
+        attributes :: ByteString
       }
   deriving (Generic, Show)

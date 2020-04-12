@@ -7,16 +7,13 @@ module Whenever.Event.Unencrypted
   )
 where
 
-import Data.Text (Text)
-import Data.Time (UTCTime)
 import Data.UUID (UUID)
 import GHC.Generics (Generic)
+import Whenever.Event.Attributes (EventAttributes)
 
 data UnencryptedEvent
   = UnencryptedEvent
       { id :: UUID,
-        title :: Text,
-        startsAt :: UTCTime,
-        endsAt :: UTCTime
+        attributes :: EventAttributes
       }
   deriving (Generic, Show)

@@ -23,6 +23,7 @@ library
                        Whenever.Calendar.EventIndex,
                        Whenever.Calendar.Unencrypted,
                        Whenever.Event,
+                       Whenever.Event.Attributes,
                        Whenever.Event.Encrypted,
                        Whenever.Event.Unencrypted
   other-modules:       Crypto.Data.Padding.Extended

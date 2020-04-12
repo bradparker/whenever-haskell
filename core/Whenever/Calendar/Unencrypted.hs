@@ -7,7 +7,6 @@ module Whenever.Calendar.Unencrypted
   )
 where
 
-import Data.IntMap (IntMap)
 import Data.UUID (UUID)
 import GHC.Generics (Generic)
 import Whenever.Calendar.EventIndex (EventIndex)

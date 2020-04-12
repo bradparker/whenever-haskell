@@ -13,26 +13,21 @@ import Crypto.Cipher.AES (AES256)
 import Crypto.Cipher.Types (cipherInit)
 import Crypto.Error (eitherCryptoError)
 import Data.ByteString (ByteString)
-import qualified Data.IntMap as IntMap
 import Data.Time
   ( ParseTime,
-    UTCTime,
     defaultTimeLocale,
-    diffTimeToPicoseconds,
-    diffUTCTime,
     iso8601DateFormat,
     parseTimeM,
   )
-import Data.Time.Clock.POSIX (posixSecondsToUTCTime)
 import qualified Data.UUID.V4 as UUID
 import Whenever
-  ( EventIndex (..),
-    UnencryptedCalendar (..),
-    UnencryptedEvent (..),
+  ( EventAttributes (..),
     decryptCalendar,
     decryptEvent,
     encryptCalendar,
     encryptEvent,
+    event,
+    newCalendar,
   )
 
 iso8601ParseM :: (Monad m, ParseTime t) => String -> m t
@@ -45,40 +40,24 @@ iso8601ParseM =
 key :: ByteString
 key = "yUiUIIs1bM8zleXFQKNk6mtGODbFU3Eu"
 
-epoch :: UTCTime
-epoch = posixSecondsToUTCTime 0
-
-utcTimeToMicros :: UTCTime -> Integer
-utcTimeToMicros t =
-  diffTimeToPicoseconds (realToFrac (diffUTCTime t epoch)) `div` 1000000
-
-utcTimeToMillis :: UTCTime -> Integer
-utcTimeToMillis = (`div` 1000) . utcTimeToMicros
-
 main :: IO ()
 main = do
+  calendarId <- UUID.nextRandom
   eventId <- UUID.nextRandom
   start <- iso8601ParseM "2020-01-01T00:00:00Z"
   end <- iso8601ParseM "2020-01-01T01:00:00Z"
-  let unencryptedEvent =
-        UnencryptedEvent
-          { id = eventId,
-            title = "A plain text title!",
-            startsAt = start,
-            endsAt = end
-          }
-  print unencryptedEvent
-  calendarId <- UUID.nextRandom
-  let unencryptedCalendar =
-        UnencryptedCalendar
-          { id = calendarId,
-            eventIndex =
-              EventIndex
-                { startsAt = IntMap.singleton (fromInteger (utcTimeToMillis start)) eventId,
-                  endsAt = IntMap.singleton (fromInteger (utcTimeToMillis end)) eventId
-                }
-          }
+  let (unencryptedEvent, unencryptedCalendar) =
+        event
+          eventId
+          ( EventAttributes
+              { title = "A plain text title!",
+                startsAt = start,
+                endsAt = end
+              }
+          )
+          (newCalendar calendarId)
   print unencryptedCalendar
+  print unencryptedEvent
   case eitherCryptoError (cipherInit @AES256 key) of
     Left e -> print e
     Right cipher -> do
