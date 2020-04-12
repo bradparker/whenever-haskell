@@ -28,6 +28,7 @@ import Whenever
     encryptEvent,
     event,
     newCalendar,
+    calendarEventsBetween
   )
 
 iso8601ParseM :: (Monad m, ParseTime t) => String -> m t
@@ -67,3 +68,6 @@ main = do
       let encryptedCalendar = encryptCalendar cipher unencryptedCalendar
       print encryptedCalendar
       print $ decryptCalendar cipher encryptedCalendar
+      low <- iso8601ParseM "2019-01-01T00:00:00Z"
+      high <- iso8601ParseM "2021-01-01T01:00:00Z"
+      print $ calendarEventsBetween low high unencryptedCalendar

@@ -11,6 +11,7 @@ module Whenever.Calendar
     decryptCalendar,
     newCalendar,
     upsertCalendarEvent,
+    calendarEventsBetween,
   )
 where
 
@@ -22,6 +23,7 @@ import qualified Data.Aeson as JSON
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.Lazy as LBS
 import Data.Generics.Product.Fields (field)
+import Data.Set (Set)
 import Data.Time (UTCTime, diffTimeToPicoseconds, diffUTCTime)
 import Data.Time.Clock.POSIX (posixSecondsToUTCTime)
 import Data.UUID (UUID)
@@ -85,3 +87,10 @@ upsertCalendarEvent eventId eventStart eventEnd calendar =
         eventId
         (fromInteger (utcTimeToMillis eventStart))
         (fromInteger (utcTimeToMillis eventEnd))
+
+calendarEventsBetween :: UTCTime -> UTCTime -> UnencryptedCalendar -> Set UUID
+calendarEventsBetween low high calendar =
+  eventsBetween
+    (fromInteger (utcTimeToMillis low))
+    (fromInteger (utcTimeToMillis high))
+    (calendar ^. field @"eventIndex")

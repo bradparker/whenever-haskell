@@ -8,10 +8,11 @@ module Whenever.Calendar.EventIndex
   ( EventIndex (..),
     emptyEventIndex,
     updateEventIndex,
+    eventsBetween
   )
 where
 
-import Control.Lens ((%~), (^.), (&))
+import Control.Lens ((%~), (&), (^.), _1, _3)
 import Data.Aeson (FromJSON, ToJSON)
 import Data.Generics.Product.Fields (field)
 import Data.IntMap (IntMap)
@@ -52,3 +53,33 @@ updateEventIndex eventId start end index =
         & field @"id" %~ Map.insert eventId (start, end)
         & field @"startsAt" %~ IntMap.insertWith (<>) start (Set.singleton eventId)
         & field @"endsAt" %~ IntMap.insertWith (<>) start (Set.singleton eventId)
+
+elemsBetween :: Int -> Int -> IntMap a -> [a]
+elemsBetween low high imap =
+   IntMap.elems $ IntMap.splitLookup high (IntMap.splitLookup low imap ^. _3) ^. _1
+
+eventsStartingBetween ::
+  Int ->
+  Int ->
+  EventIndex ->
+  Set UUID
+eventsStartingBetween low high index =
+  mconcat $ elemsBetween low high (index ^. field @"startsAt")
+
+eventsEndingBetween ::
+  Int ->
+  Int ->
+  EventIndex ->
+  Set UUID
+eventsEndingBetween low high index =
+  mconcat $ elemsBetween low high (index ^. field @"endsAt")
+
+eventsBetween ::
+  Int ->
+  Int ->
+  EventIndex ->
+  Set UUID
+eventsBetween low high index =
+  Set.intersection
+    (eventsStartingBetween low high index)
+    (eventsEndingBetween low high index)
