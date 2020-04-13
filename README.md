@@ -4,10 +4,29 @@ The idea is to build an end-to-end encrypted calendar that supports sharing. Ide
 
 ## Development
 
-Have [Nix](https://nixos.org/nix) installed and enter the shell.
+### System requirements
+
+* [Nix](https://nixos.org/nix)
+* [Docker](https://docs.docker.com/install/)
+
+### Setup
+
+Enter the Nix shell.
 
 ```
 $ nix-shell
+```
+
+Start the database service.
+
+```
+$ docker-compose up -d database
+```
+
+Setup the database.
+
+```
+$ cabal new-run whenever-database:database -- setup
 ```
 
 Then run the app.

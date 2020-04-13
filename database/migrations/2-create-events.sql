@@ -1,0 +1,8 @@
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS events (
+  id UUID PRIMARY KEY NOT NULL,
+  attributes BYTEA NOT NULL
+);
+
+COMMIT;

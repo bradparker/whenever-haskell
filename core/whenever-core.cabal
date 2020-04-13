@@ -25,7 +25,8 @@ library
                        Whenever.Event,
                        Whenever.Event.Attributes,
                        Whenever.Event.Encrypted,
-                       Whenever.Event.Unencrypted
+                       Whenever.Event.Unencrypted,
+                       Whenever.Repository
   other-modules:       Crypto.Data.Padding.Extended
   default-language:    Haskell2010
 

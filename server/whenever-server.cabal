@@ -11,10 +11,12 @@ executable whenever
                        bytestring,
                        containers,
                        cryptonite,
+                       mtl,
                        text,
                        time,
                        uuid,
-                       whenever-core
+                       whenever-core,
+                       whenever-database
   default-language:    Haskell2010
 
 test-suite whenever-test
