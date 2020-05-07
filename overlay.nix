@@ -2,8 +2,9 @@ self: super: {
   haskellPackages = super.haskellPackages.extend (
     super.haskell.lib.packageSourceOverrides {
       whenever-core = ./core;
-      whenever-server = ./server;
+      cryptonite-srp = ./cryptonite-srp;
       whenever-database = ./database;
+      whenever-server = ./server;
     }
   );
 }

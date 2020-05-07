@@ -1,0 +1,18 @@
+cabal-version:       2.4
+name:                cryptonite-srp
+version:             0.1.0.0
+author:              Brad Parker
+maintainer:          hi@bradparker.com
+
+library
+  exposed-modules:     Crypto.PubKey.SRP
+  build-depends:       base ^>=4.12.0.0,
+                       cryptonite
+  default-language:    Haskell2010
+
+test-suite cryptonite-srp-test
+  default-language:    Haskell2010
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Main.hs
+  build-depends:       base ^>=4.12.0.0
