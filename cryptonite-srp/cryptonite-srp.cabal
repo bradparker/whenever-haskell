@@ -5,9 +5,12 @@ author:              Brad Parker
 maintainer:          hi@bradparker.com
 
 library
-  exposed-modules:     Crypto.PubKey.SRP
+  exposed-modules:     Crypto.PubKey.SRP.Client,
+                       Crypto.PubKey.SRP.Server
+  other-modules:       Crypto.PubKey.SRP.Shared
   build-depends:       base ^>=4.12.0.0,
-                       cryptonite
+                       cryptonite,
+                       memory
   default-language:    Haskell2010
 
 test-suite cryptonite-srp-test
