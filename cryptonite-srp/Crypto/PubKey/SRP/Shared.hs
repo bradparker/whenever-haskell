@@ -5,6 +5,7 @@
 
 module Crypto.PubKey.SRP.Shared
   ( Params (..),
+    Identifier (..),
     Salt (..),
     Verifier (..),
     PublicNumber (..),
@@ -134,13 +135,17 @@ newtype PublicNumber = PublicNumber Integer
 newtype PrivateNumber = PrivateNumber Integer
   deriving (Show, Read, Eq, Enum, Real, Num, Ord)
 
--- | Represent Secure Remote Password shared secret.
+-- | Represent Secure Remote Password shared secret, called K in SRP text.
 newtype SharedKey = SharedKey ScrubbedBytes
   deriving (Show, Eq, ByteArrayAccess)
 
+-- | Represent Secure Remote Password shared matcher for SharedKey
+-- verification, called M in SRP text.
 newtype Matcher = Matcher Bytes
   deriving (Show, Eq, ByteArrayAccess)
 
+-- | Represent Secure Remote Password shared proof for Matcher
+-- verification, called P in SRP text.
 newtype Proof = Proof Bytes
   deriving (Show, Eq, ByteArrayAccess)
 

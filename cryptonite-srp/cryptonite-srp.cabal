@@ -18,4 +18,10 @@ test-suite cryptonite-srp-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Main.hs
-  build-depends:       base ^>=4.12.0.0
+  build-depends:       base ^>=4.12.0.0,
+                       bytestring,
+                       cryptonite-srp,
+                       hedgehog,
+                       memory,
+                       tasty,
+                       tasty-hedgehog

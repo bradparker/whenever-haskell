@@ -8,6 +8,7 @@
 }:
   nixpkgs.haskellPackages.shellFor {
     packages = p: with p; [
+      cryptonite-srp
       whenever-core
       whenever-database
       whenever-server
