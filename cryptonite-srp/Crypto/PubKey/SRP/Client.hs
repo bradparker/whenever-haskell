@@ -16,7 +16,7 @@ import Crypto.Hash (HashAlgorithm)
 import Crypto.Number.ModArithmetic (expSafe)
 import Crypto.Number.Serialize (i2ospOf_, os2ip)
 import Crypto.PubKey.SRP.Shared
-import Data.ByteArray (ByteArrayAccess, ScrubbedBytes, convert, Bytes)
+import Data.ByteArray (ByteArrayAccess, Bytes, ScrubbedBytes, convert)
 
 newtype Password = Password ScrubbedBytes
   deriving (Show, Eq, ByteArrayAccess)

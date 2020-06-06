@@ -1,6 +1,5 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE TypeApplications #-}
 {-# OPTIONS_GHC -Wall #-}
@@ -13,6 +12,7 @@ where
 import Control.Exception (bracket)
 import Control.Lens ((^.), _1, _2, view)
 import Control.Monad.Except (ExceptT (ExceptT))
+import Data.ByteString (ByteString)
 import Data.Generics.Product.Fields (field')
 import Data.Profunctor (dimap, lmap)
 import Data.Set (Set)
@@ -41,6 +41,7 @@ saveCalendar =
       ON CONFLICT (id) DO UPDATE SET eventIndex = $2 :: bytea
     |]
   where
+    encoder :: EncryptedCalendar -> (UUID, ByteString)
     encoder calendar =
       ( calendar ^. field' @"id",
         calendar ^. field' @"eventIndex"
@@ -70,6 +71,7 @@ saveEvent =
       ON CONFLICT (id) DO UPDATE SET attributes = $2 :: bytea
     |]
   where
+    encoder :: EncryptedEvent -> (UUID, ByteString)
     encoder event =
       ( event ^. field' @"id",
         event ^. field' @"attributes"

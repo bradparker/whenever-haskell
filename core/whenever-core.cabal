@@ -7,7 +7,7 @@ maintainer:          hi@bradparker.com
 
 library
   main-is:             Main.hs
-  build-depends:       base ^>=4.12.0.0,
+  build-depends:       base ^>=4.13.0.0,
                        aeson,
                        bytestring,
                        containers,
@@ -35,4 +35,4 @@ test-suite whenever-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Main.hs
-  build-depends:       base ^>=4.12.0.0
+  build-depends:       base ^>=4.13.0.0

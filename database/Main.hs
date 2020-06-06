@@ -3,7 +3,7 @@
 
 module Main where
 
-import Control.Monad (unless, when)
+import Control.Monad ((<=<), unless, when)
 import Data.Foldable (traverse_)
 import Data.Functor (void)
 import Data.Maybe (listToMaybe)
@@ -95,29 +95,26 @@ appliedMigrations uri =
 
 applyMigration :: URI -> FilePath -> IO ()
 applyMigration uri filename = do
-  let name = takeBaseName filename
-  migrations <- appliedMigrations uri
-  unless (name `elem` migrations) $ do
-    void $ execCommand uri =<< readFile filename
-    void $ execCommand uri $
-      "insert into " <> migrationsTableName <> " (name) values ('" <> name <> "')"
+  void $ execCommand uri =<< readFile filename
+  void $ execCommand uri $
+    "insert into " <> migrationsTableName <> " (name) values ('" <> takeBaseName filename <> "')"
 
 migrateDatabase :: URI -> FilePath -> IO ()
 migrateDatabase uri dir = do
   ensureMigrationsTable uri
   applied <- fmap ((dir </>) . (<.> ".sql")) <$> appliedMigrations uri
-  print applied
   files <- fmap (dir </>) . filter ((".sql" ==) . takeExtension) <$> listDirectory dir
-  print files
-  case listToMaybe (reverse applied) of
-    Nothing ->
-      traverse_
-        (applyMigration uri)
-        files
-    Just mostRecent ->
-      traverse_
-        (applyMigration uri)
-        (drop 1 (dropWhile (/= mostRecent) files))
+  if files == applied
+    then putStrLn "Database up to date. No migrations to run."
+    else case listToMaybe (reverse applied) of
+      Nothing ->
+        traverse_
+          (applyMigration uri)
+          files
+      Just mostRecentlyApplied ->
+        traverse_
+          (applyMigration uri)
+          (drop 1 (dropWhile (/= mostRecentlyApplied) files))
 
 createDatabase :: URI -> IO ()
 createDatabase uri = do
@@ -189,7 +186,7 @@ parseCommand _ = Nothing
 main :: IO ()
 main = do
   uri <- parseDatabaseUrl =<< getEnv "DATABASE_URL"
-  command <- (parseCommand =<<) . listToMaybe <$> getArgs
+  command <- (parseCommand <=< listToMaybe) <$> getArgs
   let migrationsDir = "./database/migrations"
   case command of
     Just Create -> createDatabase uri

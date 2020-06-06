@@ -17,12 +17,7 @@ import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as BS
 import Data.Functor (void)
 import qualified Data.Set as Set
-import Data.Time
-  ( ParseTime,
-    defaultTimeLocale,
-    iso8601DateFormat,
-    parseTimeM,
-  )
+import Data.Time.Format.ISO8601 (iso8601ParseM)
 import qualified Data.UUID.V4 as UUID
 import System.Environment (getEnv)
 import Whenever
@@ -37,13 +32,6 @@ import Whenever
   )
 import Whenever.Repository (loadCalendars, loadEvents, saveCalendar, saveEvent)
 import Whenever.Repository.Postgres (withRepository)
-
-iso8601ParseM :: (Monad m, ParseTime t) => String -> m t
-iso8601ParseM =
-  parseTimeM
-    False
-    defaultTimeLocale
-    (iso8601DateFormat (Just "%H:%M:%SZ"))
 
 key :: ByteString
 key = "yUiUIIs1bM8zleXFQKNk6mtGODbFU3Eu"
