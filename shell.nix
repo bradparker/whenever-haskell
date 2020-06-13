@@ -1,7 +1,6 @@
 {
   nixpkgs ? import ./nixpkgs.nix {
     overlays = [
-      (import ./nix/hasql-pool-overlay.nix)
       (import ./overlay.nix)
     ];
   }
