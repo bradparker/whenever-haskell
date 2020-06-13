@@ -11,6 +11,7 @@
       whenever-core
       whenever-database
       whenever-server
+      whenever-tui
     ];
     nativeBuildInputs = with nixpkgs; [
       cabal-install

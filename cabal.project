@@ -3,6 +3,7 @@ packages:
   cryptonite-srp/
   database/
   server/
+  tui/
 
 package cryptonite-srp
  tests: True
